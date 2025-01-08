@@ -5,13 +5,32 @@ type props = {
   oldName: string,
   oldTagline: string,
   onClose: () => void,
-  onSubmit: (name : string, tagline: string) => void,
   onOverwrite: (name : string, tagline: string) => void,
+  onChange: (name : string, tagline: string) => void,
 };
 
 const HeaderPopup : FC<props> = (props) => {
   const [name, setName] = useState(props.oldName);
   const [tagline, setTagline] = useState(props.oldTagline);
+
+  const nameChanged = (s : string) => {
+    setName(s);
+    props.onChange(s, tagline);
+  }
+
+  const taglineChanged = (s : string) => {
+    setTagline(s);
+    props.onChange(name, s);
+  }
+
+  // This is actually a much bigger can of worms than you realized
+  // Revert to what, if edited then edited again? Default?
+  // Revert to what on a saved resume? Saved? or Default?
+  const onRevert = () => {
+    setName(props.oldName);
+    setTagline(props.oldTagline);
+    props.onChange(props.oldName, props.oldTagline);
+  }
 
   const isAnythingChanged = () => {
     return name != props.oldName || tagline != props.oldTagline;
@@ -31,12 +50,12 @@ const HeaderPopup : FC<props> = (props) => {
       <div className="w-full flex flex-col gap-y-2">
         <input 
           value={name}
-          onChange={e => setName(e.target.value)}
+          onChange={e => nameChanged(e.target.value)}
           placeholder="Name"
         />
         <input
           value={tagline}
-          onChange={e => setTagline(e.target.value)}
+          onChange={e => taglineChanged(e.target.value)}
           placeholder="Tagline"
         />
       </div>
@@ -46,16 +65,16 @@ const HeaderPopup : FC<props> = (props) => {
             <button 
               className="px-3 py-1.5 mr-4 rounded-md text-stone-200
             bg-stone-800 hover:bg-stone-600 disabled:bg-stone-600"
-              onClick={() => props.onSubmit(name, tagline) }
+              onClick={() => props.onOverwrite(name, tagline) }
             >
-              Save Changes
+              Overwrite Default
             </button>
             <button 
               className="px-3 py-1.5 mr-4 rounded-md text-stone-200
             bg-stone-800 hover:bg-stone-600 disabled:bg-stone-600"
-              onClick={() => props.onOverwrite(name, tagline) }
+              onClick={onRevert}
             >
-              Overwrite Default
+              Revert Changes
             </button>
           </>
         :

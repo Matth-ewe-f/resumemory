@@ -12,12 +12,14 @@ import SavePopup from "@/components/SavePopup";
 import LoadPopup from "@/components/LoadPopup";
 import HeaderPopup from "@/components/HeaderPopup";
 import { v4 } from "uuid";
-import Resume from "@/components/Resume";
+import Resume from "@/components/ResumeV2";
 
 const Page : FC = () => {
   // header state
   const [name, setName] = useState("");
   const [tagline, setTagline] = useState("");
+  const [oldName, setOldName] = useState("");
+  const [oldTagline, setOldTagline] = useState("");
   // state for the right column
   const [rightColumn, setRightColumn] = useState<rightColumnItem[]>([]);
   const [focusedRightItem, setFocusedRightItem] = useState(-1);
@@ -101,6 +103,10 @@ const Page : FC = () => {
   const showPopup = (popupName : string) => {
     if (widgets) {
       setCurrentPopup(popupName);
+      if (popupName == "header") {
+        setOldName(name);
+        setOldTagline(tagline);
+      }
     }
   }
 
@@ -153,10 +159,9 @@ const Page : FC = () => {
   }
 
   const generateNameTaglineEdit = () => {
-    const onSubmit = (name : string, tagline : string) => {
+    const onChange = (name : string, tagline : string) => {
       setName(name);
       setTagline(tagline);
-      showPopup("header");
     }
 
     const onOverwrite = (newName : string, newTagline : string) => {
@@ -200,11 +205,11 @@ const Page : FC = () => {
       <div className="fixed top-0 p-16 w-screen h-screen flex items-center
       justify-center bg-white bg-opacity-70">
         <HeaderPopup
-          oldName={name}
-          oldTagline={tagline}
+          oldName={oldName}
+          oldTagline={oldTagline}
           onClose={() => showPopup("")}
-          onSubmit={onSubmit}
           onOverwrite={onOverwrite}
+          onChange={onChange}
         />
       </div>
     )

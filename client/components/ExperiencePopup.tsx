@@ -291,7 +291,7 @@ const ExperiencePopup : FC<props> = (props) => {
                 bg-stone-800 hover:bg-stone-600"
                 onClick={onSave}
               >
-                { isNewItem ? "Save New Item" : "Save Changes"}
+                { isNewItem ? "Save New Item" : "Overwrite Default"}
               </button>
               <button
                 className="px-3 py-1.5 rounded-md text-stone-200
