@@ -18,14 +18,21 @@ const config: Config = {
         roboto: ['var(--font-roboto)'],
       },
       letterSpacing: {
+        "extra-wider": '0.1em',
         ultra: '0.2em',
       },
       fontSize: {
+        // relative font sizes
         "mini": "0.65rem",
         "ssm": "0.75rem",
         "sm": "0.85rem",
         "base": "1rem",
         "4.5xl": '2.375rem',
+        // absolute font sizes
+        "28px": "28px",
+        "16px": "16px",
+        "11px": "11px",
+        "11.5px": "11.5px",
       }
     },
   },
