@@ -44,8 +44,8 @@ const Resume : FC<props> = (props) => {
       return jsx;
     }
 
-    return text.split("\n").map((piece) => {
-      return <p className="min-h-2">
+    return text.split("\n").map((piece, index) => {
+      return <p className="min-h-2" key={index}>
         {
           piece.split("**").map((piece, index) => {
             if (index % 2 == 0) {
@@ -57,22 +57,6 @@ const Resume : FC<props> = (props) => {
         }
       </p>
     })
-  }
-  
-  const generateSummarySection = () => {
-    return (
-      <button onClick={() => showPopup("summary")} className="text-left">
-        <h5 className="mb-2 text font-grotesk font-medium uppercase
-        tracking-ultra">
-          Summary
-        </h5>
-        { props.summary != "" &&
-          <div className="text-mini text-justify leading-tight pr-4">
-            { processMdSubset(props.summary) }
-          </div>
-        }
-      </button>
-    );
   }
   
   const generateContactLine = () => {
@@ -88,8 +72,11 @@ const Resume : FC<props> = (props) => {
       }
     }
 
+
     return <p className="text-11px text-center">
-      { props.contacts.filter(c => c.shown).map((contact, index, arr) => {
+      { props.contacts.filter(
+          c => c.shown && c.name.split(" ")[0].toLowerCase() != "portfolio"
+        ).map((contact, index, arr) => {
         return <>
           <span className="mx-1">
             { getTextForContact(contact) }
@@ -176,7 +163,7 @@ const Resume : FC<props> = (props) => {
 
     return <>
       <input
-        className="w-full font-16px tracking-extra-wider uppercase 
+        className="w-full first:mt-2 font-16px tracking-extra-wider uppercase 
         font-medium"
         value={heading.text}
         onChange={(e) => onHeadingChange(e.target.value)}
@@ -211,7 +198,7 @@ const Resume : FC<props> = (props) => {
           <p className="relative -top-0.5 w-full text-11px">
             { processMdSubset(experience.subtitle) }
           </p>
-          <ul className="-mt-0.25 ml-4 text-11px list-disc text-justify">
+          <ul className="-mt-[2px] ml-4 text-11px list-disc text-justify">
             {experience.bullets.map((bullet, j) => {
               if (bullet.shown) {
                 return (
@@ -244,14 +231,22 @@ const Resume : FC<props> = (props) => {
           </h1>
         </button>
         { props.leftColumnSections.some(s => s.name == "Contact" && s.shown) ?
-          generateContactLine()
+          <>
+            { generateContactLine() }
+            { props.contacts.filter(
+              s => s.name.split(" ")[0].toLowerCase() == "portfolio" && s.shown
+            ).map(contact => {
+              return (
+                <p className="mt-2 text-center text-11px">
+                  <span className="font-bold">Portfolio: </span>
+                  <span className="underline">{contact.value}</span>
+                </p>
+              );
+            }) }
+          </>
         :
           <></>
         }
-        <p className="mt-2 text-center text-11px">
-          <span className="font-bold">Portfolio: </span>
-          <span className="underline">http://testportfolio.com</span>
-        </p>
         <div>
           {props.rightColumn.map((item, index) => {
             if (item.isHeading) {
