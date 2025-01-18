@@ -15,6 +15,15 @@ import { v4 } from "uuid";
 import Resume from "@/components/ResumeV2";
 
 const Page : FC = () => {
+  // general resume state
+  const defaultSizing : sizingStrings = {
+    nameFontSize: "32",
+    headingFontSize: "17",
+    bodyTextFontSize: "11.5",
+    marginHorz: "0.6",
+    marginVert: "0.3",
+  };
+  const [sizing, setSizing] = useState<sizingStrings>(defaultSizing);
   // header state
   const [name, setName] = useState("");
   const [tagline, setTagline] = useState("");
@@ -99,6 +108,31 @@ const Page : FC = () => {
 
     return () => window.removeEventListener("keydown", handleKeyPress);
   }, []);
+
+  const convertToSizingNumbers = (strings : sizingStrings) => {
+    const name = parseFloat(strings.nameFontSize);
+    const heading = parseFloat(strings.headingFontSize);
+    const bodyText = parseFloat(strings.bodyTextFontSize);
+    const marginHorz = parseFloat(strings.marginHorz);
+    const marginVert = parseFloat(strings.marginVert);
+    return {
+      nameFontSize: Number.isNaN(name) ? 1 : name,
+      headingFontSize: Number.isNaN(heading) ? 1 : heading,
+      bodyTextFontSize: Number.isNaN(bodyText) ? 1 : bodyText,
+      marginHorz: Number.isNaN(marginHorz) ? 1 : marginHorz,
+      marginVert: Number.isNaN(marginVert) ? 1 : marginVert,
+    };
+  }
+
+  const convertToSizingStrings = (sizing : sizing) => {
+    return {
+      nameFontSize: String(sizing.nameFontSize),
+      headingFontSize: String(sizing.headingFontSize),
+      bodyTextFontSize: String(sizing.bodyTextFontSize),
+      marginHorz: String(sizing.marginHorz),
+      marginVert: String(sizing.marginVert),
+    }
+  }
 
   const showPopup = (popupName : string) => {
     if (widgets) {
@@ -411,6 +445,8 @@ const Page : FC = () => {
   const generateLeftColumnBuilder = () => {
     return <LeftColBuilder
       show={widgets}
+      sizing={sizing}
+      updateSizing={setSizing}
       sections={leftSections}
       updateSections={setLeftSections}
       contacts={contacts}
@@ -492,6 +528,7 @@ const Page : FC = () => {
       })
       const body : resume = {
         id: v4(),
+        sizing: convertToSizingNumbers(sizing),
         name: resumeName,
         headerName: name,
         tagline: tagline,
@@ -612,6 +649,11 @@ const Page : FC = () => {
         })
       )
       setName(selected.headerName);
+      if (selected.sizing) {
+        setSizing(convertToSizingStrings(selected.sizing));
+      } else {
+        setSizing(defaultSizing);
+      }
       setTagline(selected.tagline);
       setRightColumn(selected.rightColumn);
       setLeftSections(selected.leftColumnSections);
@@ -771,6 +813,7 @@ const Page : FC = () => {
   return <>
     <Resume
       border={widgets}
+      sizing={convertToSizingNumbers(sizing)}
       name={name}
       tagline={tagline}
       rightColumn={rightColumn}

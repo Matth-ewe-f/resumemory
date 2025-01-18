@@ -30,6 +30,6 @@
   transition-property: left right top bottom;
 }
 
-.grid-fit-columns {
-  grid-template-columns: fit-content(200px) 1fr fit-content(200px);
+.grid-fit-col1 {
+  grid-template-columns: auto 1fr;
 }

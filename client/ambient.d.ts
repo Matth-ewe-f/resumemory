@@ -1,5 +1,6 @@
 type resume = {
   id: string,
+  sizing?: sizing,
   name: string,
   headerName: string,
   tagline: string,
@@ -11,6 +12,22 @@ type resume = {
   skillLists: skillList[],
   references: reference[],
   dateSaved: string,
+}
+
+type sizing = {
+  nameFontSize: number,
+  headingFontSize: number,
+  bodyTextFontSize: number,
+  marginHorz: number,
+  marginVert: number,
+}
+
+type sizingStrings = {
+  nameFontSize: string,
+  headingFontSize: string,
+  bodyTextFontSize: string,
+  marginHorz: string,
+  marginVert: string,
 }
 
 type experience = {
