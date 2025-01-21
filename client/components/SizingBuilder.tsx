@@ -15,6 +15,12 @@ const SizingBuilder = ({open, setOpen, sizing, updateSizing} : props) => {
     updateSizing(newSizing);
   }
 
+  const updateHeaderMargin = (newSize : string) => {
+    let newSizing = structuredClone(sizing);
+    newSizing.headerMargin = newSize;
+    updateSizing(newSizing);
+  }
+
   const updateHeadingSize = (newSize : string) => {
     let newSizing = structuredClone(sizing);
     newSizing.headingFontSize = newSize;
@@ -60,6 +66,15 @@ const SizingBuilder = ({open, setOpen, sizing, updateSizing} : props) => {
               className="px-0.5 w-16"
               value={sizing.nameFontSize}
               onChange={(e) => updateNameSize(e.target.value)}
+            />
+        </div>
+        <div className="flex my-1 justify-between">
+            <p>Header Margin:</p>
+            <input
+              type="number"
+              className="px-0.5 w-16"
+              value={sizing.headerMargin}
+              onChange={(e) => updateHeaderMargin(e.target.value)}
             />
         </div>
         <div className="flex my-1 justify-between">

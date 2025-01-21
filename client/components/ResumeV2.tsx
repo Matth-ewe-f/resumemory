@@ -24,6 +24,7 @@ const Resume : FC<props> = (props) => {
   // layout constants with default values
   const sizing = props.sizing;
   const nameFont = sizing ? sizing.nameFontSize : 32;
+  const headerMargin = sizing ? sizing.headerMargin : 0.15;
   const headingFont = sizing ? sizing.headingFontSize : 17;
   const bodyTextFont = sizing ? sizing.bodyTextFontSize : 11.5;
   const marginHorz = sizing ? sizing.marginHorz : 0.6;
@@ -84,7 +85,7 @@ const Resume : FC<props> = (props) => {
 
     return (
       <p className="text-center" 
-      style={{ fontSize: itemHeadingFont + "px"}}>
+      style={{ fontSize: itemHeadingFont + "px" }}>
         { props.contacts.filter(
             c => c.shown && c.name.split(" ")[0].toLowerCase() != "portfolio"
           ).map((contact, index, arr) => {
@@ -178,7 +179,7 @@ const Resume : FC<props> = (props) => {
 
     return <>
       <input
-        className="w-full first:mt-2 tracking-extra-wider uppercase font-medium"
+        className="w-full tracking-extra-wider uppercase font-medium"
         style={{ fontSize: headingFont + "px" }}
         value={heading.text}
         onChange={(e) => onHeadingChange(e.target.value)}
@@ -276,7 +277,7 @@ const Resume : FC<props> = (props) => {
         :
           <></>
         }
-        <div>
+        <div style={{ marginTop: (headerMargin + "in") }}>
           {props.rightColumn.map((item, index) => {
             if (item.isHeading) {
               return generateHeadingJSX(item as heading, index)

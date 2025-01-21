@@ -18,6 +18,7 @@ const Page : FC = () => {
   // general resume state
   const defaultSizing : sizingStrings = {
     nameFontSize: "32",
+    headerMargin: "0.15",
     headingFontSize: "17",
     bodyTextFontSize: "11.5",
     marginHorz: "0.6",
@@ -88,7 +89,7 @@ const Page : FC = () => {
         { name: "Contact", shown: true },
         { name: "Education", shown: true },
         { name: "Skills", shown: true },
-        { name: "References", shown: true },
+        { name: "References", shown: false },
       ])
       setLoading(false);
     }).catch(err => {
@@ -111,12 +112,14 @@ const Page : FC = () => {
 
   const convertToSizingNumbers = (strings : sizingStrings) => {
     const name = parseFloat(strings.nameFontSize);
+    const margin = parseFloat(strings.headerMargin);
     const heading = parseFloat(strings.headingFontSize);
     const bodyText = parseFloat(strings.bodyTextFontSize);
     const marginHorz = parseFloat(strings.marginHorz);
     const marginVert = parseFloat(strings.marginVert);
     return {
       nameFontSize: Number.isNaN(name) ? 1 : name,
+      headerMargin: Number.isNaN(name) ? 0 : margin,
       headingFontSize: Number.isNaN(heading) ? 1 : heading,
       bodyTextFontSize: Number.isNaN(bodyText) ? 1 : bodyText,
       marginHorz: Number.isNaN(marginHorz) ? 1 : marginHorz,
@@ -127,6 +130,7 @@ const Page : FC = () => {
   const convertToSizingStrings = (sizing : sizing) => {
     return {
       nameFontSize: String(sizing.nameFontSize),
+      headerMargin: String(sizing.headerMargin),
       headingFontSize: String(sizing.headingFontSize),
       bodyTextFontSize: String(sizing.bodyTextFontSize),
       marginHorz: String(sizing.marginHorz),

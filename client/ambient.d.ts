@@ -16,6 +16,7 @@ type resume = {
 
 type sizing = {
   nameFontSize: number,
+  headerMargin: number,
   headingFontSize: number,
   bodyTextFontSize: number,
   marginHorz: number,
@@ -24,6 +25,7 @@ type sizing = {
 
 type sizingStrings = {
   nameFontSize: string,
+  headerMargin: string,
   headingFontSize: string,
   bodyTextFontSize: string,
   marginHorz: string,

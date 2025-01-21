@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import LeftSectionBuilder from "./LeftSectionBuilder";
-import SizingBuilder from "./SizingBuilding";
+import SizingBuilder from "./SizingBuilder";
 
 type props = {
   show : boolean,
