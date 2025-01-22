@@ -1,13 +1,21 @@
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, Square, SquareCheckBig } from "lucide-react";
 
 type props = {
   open : boolean,
   setOpen : (b : boolean) => void,
+  useV2 : boolean,
+  setUseV2 : (b : boolean) => void,
   sizing : sizingStrings,
   updateSizing : (s : sizingStrings) => void,
 }
 
-const SizingBuilder = ({open, setOpen, sizing, updateSizing} : props) => {
+const SizingBuilder = (props : props) => {
+  const open = props.open;
+  const setOpen = props.setOpen;
+  const useV2 = props.useV2;
+  const setUseV2 = props.setUseV2;
+  const sizing = props.sizing;
+  const updateSizing = props.updateSizing;
 
   const updateNameSize = (newSize : string) => {
     let newSizing = structuredClone(sizing);
@@ -58,7 +66,17 @@ const SizingBuilder = ({open, setOpen, sizing, updateSizing} : props) => {
         </button>
       </div>
       <div className={"overflow-y-hidden transition-all duration-300 " +
-      (open ? 'max-h-48' : 'max-h-0')}>
+      (open ? 'max-h-52' : 'max-h-0')}>
+        <div className="flex my-1 justify-between">
+          <p>Use Layout V2</p>
+          <button onClick={ () => setUseV2(!useV2) }>
+            { useV2 ?
+              <SquareCheckBig size={16} />
+            :
+              <Square size={16} />
+            }
+          </button>
+        </div>
         <div className="flex my-1 justify-between">
             <p>Name Font Size:</p>
             <input

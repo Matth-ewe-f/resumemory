@@ -4,6 +4,8 @@ import SizingBuilder from "./SizingBuilder";
 
 type props = {
   show : boolean,
+  useV2 : boolean,
+  setUseV2 : (b : boolean) => void,
   sizing : sizingStrings,
   updateSizing : (s : sizingStrings) => void,
   sections: leftColumnSection[],
@@ -84,6 +86,8 @@ const LeftColBuilder : FC<props> = (props) => {
       <SizingBuilder
         open={sizingOpen}
         setOpen={setSizingOpenWrap}
+        useV2={props.useV2}
+        setUseV2={props.setUseV2}
         sizing={props.sizing}
         updateSizing={props.updateSizing}
       />

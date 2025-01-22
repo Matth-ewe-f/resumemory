@@ -12,10 +12,12 @@ import SavePopup from "@/components/SavePopup";
 import LoadPopup from "@/components/LoadPopup";
 import HeaderPopup from "@/components/HeaderPopup";
 import { v4 } from "uuid";
-import Resume from "@/components/ResumeV2";
+import ResumeV1 from "@/components/ResumeV1";
+import ResumeV2 from "@/components/ResumeV2";
 
 const Page : FC = () => {
   // general resume state
+  const [useV2, setUseV2] = useState<boolean>(true);
   const defaultSizing : sizingStrings = {
     nameFontSize: "32",
     headerMargin: "0.15",
@@ -449,6 +451,8 @@ const Page : FC = () => {
   const generateLeftColumnBuilder = () => {
     return <LeftColBuilder
       show={widgets}
+      useV2={useV2}
+      setUseV2={setUseV2}
       sizing={sizing}
       updateSizing={setSizing}
       sections={leftSections}
@@ -815,23 +819,42 @@ const Page : FC = () => {
   }
 
   return <>
-    <Resume
-      border={widgets}
-      sizing={convertToSizingNumbers(sizing)}
-      name={name}
-      tagline={tagline}
-      rightColumn={rightColumn}
-      leftColumnSections={leftSections}
-      summary={summary}
-      contacts={contacts}
-      education={educationText}
-      skills={skills}
-      references={references}
-      showPopup={showPopup}
-      setFocusedRightItem={setFocusedRightItem}
-      setRightColumn={setRightColumn}
-      setFocusedSkill={setFocusedSkill}
-    />
+    { useV2 ?
+      <ResumeV2
+        border={widgets}
+        sizing={convertToSizingNumbers(sizing)}
+        name={name}
+        tagline={tagline}
+        rightColumn={rightColumn}
+        leftColumnSections={leftSections}
+        summary={summary}
+        contacts={contacts}
+        education={educationText}
+        skills={skills}
+        references={references}
+        showPopup={showPopup}
+        setFocusedRightItem={setFocusedRightItem}
+        setRightColumn={setRightColumn}
+        setFocusedSkill={setFocusedSkill}
+      />
+    :
+      <ResumeV1
+        border={widgets}
+        name={name}
+        tagline={tagline}
+        rightColumn={rightColumn}
+        leftColumnSections={leftSections}
+        summary={summary}
+        contacts={contacts}
+        education={educationText}
+        skills={skills}
+        references={references}
+        showPopup={showPopup}
+        setFocusedRightItem={setFocusedRightItem}
+        setRightColumn={setRightColumn}
+        setFocusedSkill={setFocusedSkill}
+      />
+    }
     { generateWidgetToggle() }
     { generateLeftColumnBuilder() }
     { generateSaveLoad() }
