@@ -238,7 +238,7 @@ const Resume : FC<props> = (props) => {
 
   return (
     <div className="w-full min-h-screen flex items-center justify-center">
-      <div className={"w-[7.5in] h-[11in] border-black "
+      <div className={"w-[8.5in] h-[11in] border-black "
         + (props.border ? 'border' : '')}
         style={{ padding: marginVert + "in " + marginHorz + "in" }}
         >
